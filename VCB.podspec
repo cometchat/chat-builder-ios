@@ -15,9 +15,9 @@ Pod::Spec.new do |s|
     'VCB' => ['Resources/**/*.{xcassets,json,png}']
   }
 
-  s.vendored_frameworks = s.vendored_frameworks = [
-  "Frameworks/MTBBarcodeScanner.xcframework",
-  "Frameworks/CometChatUIKitSwift.xcframework"
+  s.vendored_frameworks = [
+  'Frameworks/MTBBarcodeScanner.xcframework',
+  'Frameworks/CometChatUIKitSwift.xcframework'
 ]
 
   s.swift_versions = ['5.0', '5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7']
