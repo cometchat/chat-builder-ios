@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Sources/VCB/**/*.{swift,h}'
   s.resource_bundles = {
-    'VCB' => ['Resources/**/*.{xcassets,json,png}']
+  'VCB' => ['Resources/**/*']
   }
 
   s.vendored_frameworks = [

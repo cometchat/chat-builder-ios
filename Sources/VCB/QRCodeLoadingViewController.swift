@@ -221,12 +221,15 @@ private class GradientProgressView: UIView {
     }
 }
 
-public enum VCBAssets {
-    public static func image(named: String) -> UIImage? {
-        #if SWIFT_PACKAGE
-        return UIImage(named: named, in: Bundle.module, compatibleWith: nil)
-        #else
-        return UIImage(named: named, in: Bundle(for: VCBHelper.self), compatibleWith: nil)
-        #endif
+public class VCBAssets {
+    public static func image(named name: String) -> UIImage? {
+        let bundle = Bundle(for: Self.self)
+
+        guard let resourceBundleURL = bundle.url(forResource: "VCB", withExtension: "bundle"),
+              let resourceBundle = Bundle(url: resourceBundleURL) else {
+            return nil
+        }
+
+        return UIImage(named: name, in: resourceBundle, compatibleWith: nil)
     }
 }
