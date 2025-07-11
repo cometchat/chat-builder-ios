@@ -18,19 +18,24 @@ public class CometChatVCB {
             vc.data = code
             
             vc.onStyleApplied = { style in
-                onStyleApplied(style)
+                barCodeReaderViewController.dismiss(animated: true) {
+                    onStyleApplied(style)
+                }
             }
             
             vc.failure = {
-                showAlert(on: viewController, title: "QR Code Not Recognized", message: "The scanned QR code is invalid or not supported by this app. Please try scanning a valid code.")
+                barCodeReaderViewController.dismiss(animated: true) {
+                    showAlert(on: viewController, title: "QR Code Not Recognized", message: "The scanned QR code is invalid or not supported by this app. Please try scanning a valid code.")
+                }
             }
             
             vc.apiFailure = { error in
                 let message = error.localizedCaseInsensitiveContains("internet") ?
                     "No internet connection detected. Please check your network and try again." :
                     "Unknown Error. Please try again later."
-                
-                showAlert(on: viewController, title: "", message: message)
+                barCodeReaderViewController.dismiss(animated: true) {
+                    showAlert(on: viewController, title: "", message: message)
+                }
             }
             
             viewController.navigationController?.pushViewController(vc, animated: false)
