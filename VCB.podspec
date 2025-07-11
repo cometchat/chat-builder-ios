@@ -17,7 +17,8 @@ Pod::Spec.new do |s|
 
   s.vendored_frameworks = [
   'Frameworks/MTBBarcodeScanner.xcframework',
-  'Frameworks/CometChatUIKitSwift.xcframework'
+  'Frameworks/CometChatUIKitSwift.xcframework',
+  'Frameworks/CometChatSDK.xcframework'
 ]
 
   s.swift_versions = ['5.0', '5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7']
