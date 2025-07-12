@@ -7,10 +7,22 @@
 
 #!/bin/bash
 
+# Accept config file path from argument
+CONFIG_FILE="$1"
+
+if [ -z "$CONFIG_FILE" ]; then
+  echo "❌ Error: Missing path to vcb_config.json"
+  exit 1
+fi
+
+# Path to your VCBStatic.swift (relative to script location)
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+SWIFT_FILE="$SCRIPT_DIR/VCBStatic.swift"
+
 # Path to Swift file
-SWIFT_FILE="${PROJECT_DIR}/VCBSwift/Sources/VCB/VCBStatic.swift"
+#SWIFT_FILE="${PROJECT_DIR}/VCBSwift/Sources/VCB/VCBStatic.swift"
 # Path to config JSON
-CONFIG_FILE="${PROJECT_DIR}/master-app/vcb_config.json"
+#CONFIG_FILE="${PROJECT_DIR}/master-app/vcb_config.json"
 
 # ========== STYLE ==========
 BRAND_COLOR=$(jq -r '.data.settings.style.color.brandColor' "$CONFIG_FILE")
