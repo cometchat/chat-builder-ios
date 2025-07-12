@@ -1,5 +1,4 @@
 import UIKit
-import CometChatUIKitSwift
 import AVFoundation
 
 class BarCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {

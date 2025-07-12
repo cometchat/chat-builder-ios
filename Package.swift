@@ -13,28 +13,8 @@ let package = Package(
         )
     ],
     targets: [
-        // Binary targets for .xcframeworks
-        .binaryTarget(
-            name: "CometChatUIKitSwift",
-            path: "Frameworks/CometChatUIKitSwift.xcframework"
-        ),
-        .binaryTarget(
-            name: "CometChatSDK",
-            path: "Frameworks/CometChatSDK.xcframework"
-        ),
-        .binaryTarget(
-            name: "CometChatStarscream",
-            path: "Frameworks/CometChatStarscream.xcframework"
-        ),
-
-        // Your VCB target
         .target(
             name: "VCB",
-            dependencies: [
-                "CometChatUIKitSwift",
-                "CometChatSDK",
-                "CometChatStarscream"
-            ],
             path: "Sources/VCB",
             resources: [
                 .process("../../Resources/VCBAssets.xcassets")
