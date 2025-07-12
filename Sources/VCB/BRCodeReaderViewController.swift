@@ -1,11 +1,13 @@
 import UIKit
-import MTBBarcodeScanner
 import CometChatUIKitSwift
+import AVFoundation
 
-class BarCodeReaderViewController: UIViewController {
+class BarCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
-    var scanner: MTBBarcodeScanner?
     var onBarCodeFound: ((_ data: String) -> ())?
+    
+    var captureSession: AVCaptureSession!
+    var previewLayer: AVCaptureVideoPreviewLayer!
     
     // MARK: - Views
     
@@ -126,7 +128,6 @@ class BarCodeReaderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hex: "#141414")
-        scanner = MTBBarcodeScanner(previewView: previewView)
         setupLayout()
         startScanningAnimation()
     }
@@ -134,46 +135,15 @@ class BarCodeReaderViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        MTBBarcodeScanner.requestCameraPermission(success: { success in
-            if success {
-                do {
-                    try self.scanner?.startScanning(resultBlock: { codes in
-                        self.scanner?.stopScanning()
-                        if let codes = codes {
-                            for code in codes {
-                                DispatchQueue.main.async {
-                                    let generator = UIImpactFeedbackGenerator(style: .medium)
-                                    generator.impactOccurred()
-                                    self.dismiss(animated: false)
-                                    self.onBarCodeFound?(code.stringValue!)
-                                }
-                            }
-                        }
-                    })
-                } catch {
-                    print("Unable to start scanning")
-                }
-            } else {
-                let alert = UIAlertController(title: "Scanning Unavailable",
-                                              message: "This app does not have permission to access the camera",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                    if let nav = self.navigationController {
-                        nav.popViewController(animated: true)
-                    } else {
-                        self.dismiss(animated: true)
-                    }
-                }))
-                self.present(alert, animated: true)
-            }
-        })
-        
+        checkCameraPermissionAndStartSession()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.scanner?.stopScanning()
-        
         super.viewWillDisappear(animated)
+        
+        if captureSession?.isRunning == true {
+            captureSession.stopRunning()
+        }
     }
     
     // MARK: - Actions
@@ -203,6 +173,9 @@ class BarCodeReaderViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
+        previewLayer?.frame = previewView.bounds // <- fix camera preview issue
+
+        // Scanning UI layout
         let glowHeight: CGFloat = 24
         let glowOffset: CGFloat = 0
 
@@ -224,6 +197,42 @@ class BarCodeReaderViewController: UIViewController {
     // MARK: - Layout
     
     private func setupLayout() {
+        
+        captureSession = AVCaptureSession()
+
+        // 1. Get the back camera
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
+            failed()
+            return
+        }
+
+        // 2. Create input
+        guard let videoInput = try? AVCaptureDeviceInput(device: videoCaptureDevice) else {
+            failed()
+            return
+        }
+
+        // 3. Add input to session
+        if captureSession.canAddInput(videoInput) {
+            captureSession.addInput(videoInput)
+        } else {
+            failed()
+            return
+        }
+
+        // 4. Add metadata output
+        let metadataOutput = AVCaptureMetadataOutput()
+
+        if captureSession.canAddOutput(metadataOutput) {
+            captureSession.addOutput(metadataOutput)
+
+            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            metadataOutput.metadataObjectTypes = [.qr]
+        } else {
+            failed()
+            return
+        }
+        
         // Add subviews
         view.addSubview(headerView)
         view.addSubview(previewView)
@@ -231,6 +240,11 @@ class BarCodeReaderViewController: UIViewController {
         
         scanningLine.backgroundColor = UIColor(hex: "#6852D6")
         scanningLine.translatesAutoresizingMaskIntoConstraints = false
+        
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.videoGravity = .resizeAspectFill
+        previewView.layer.addSublayer(previewLayer)
+        
         previewView.addSubview(scanningLine)
         
         instructionsContainerView.addSubview(howToUseLabel)
@@ -311,7 +325,78 @@ class BarCodeReaderViewController: UIViewController {
             scanningLine.trailingAnchor.constraint(equalTo: previewView.trailingAnchor),
             scanningLine.topAnchor.constraint(equalTo: previewView.topAnchor, constant: previewView.bounds.height - 2)
         ])
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.captureSession.startRunning()
+        }
     }
+    
+    func failed() {
+        let alert = UIAlertController(title: "Scanning not supported", message: "Your device does not support scanning a code.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+        captureSession = nil
+    }
+    
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+            captureSession.stopRunning()
+
+            if let metadataObject = metadataObjects.first {
+                guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject,
+                      let stringValue = readableObject.stringValue else { return }
+
+                AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                found(code: stringValue)
+            }
+        }
+
+    func found(code: String) {
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+
+        self.dismiss(animated: false)
+        self.onBarCodeFound?(code)
+    }
+    
+    func checkCameraPermissionAndStartSession() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            // Already authorized
+            if !captureSession.isRunning {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.captureSession.startRunning()
+                }
+            }
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        self.captureSession.startRunning()
+                    } else {
+                        self.showPermissionAlert()
+                    }
+                }
+            }
+        case .denied, .restricted:
+            showPermissionAlert()
+        @unknown default:
+            showPermissionAlert()
+        }
+    }
+    
+    func showPermissionAlert() {
+        let alert = UIAlertController(
+            title: "Camera Permission Required",
+            message: "Please enable camera access in Settings to scan QR codes.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
+    override var prefersStatusBarHidden: Bool { return true }
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return .portrait }
+    
     
     func startScanningAnimation() {
         scanningLine.layer.removeAllAnimations()

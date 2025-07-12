@@ -8,7 +8,7 @@
 #!/bin/bash
 
 # Path to Swift file
-SWIFT_FILE="${PROJECT_DIR}/master-app/VCB/VCBStatic.swift"
+SWIFT_FILE="${PROJECT_DIR}/VCBSwift/Sources/VCB/VCBStatic.swift"
 # Path to config JSON
 CONFIG_FILE="${PROJECT_DIR}/master-app/vcb_config.json"
 

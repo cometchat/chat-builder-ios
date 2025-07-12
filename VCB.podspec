@@ -19,7 +19,6 @@ Pod::Spec.new do |s|
     'Frameworks/CometChatUIKitSwift.xcframework',
     'Frameworks/CometChatSDK.xcframework',
     'Frameworks/CometChatStarscream.xcframework',
-    'Frameworks/MTBBarcodeScanner.xcframework'
  ]
 
 
