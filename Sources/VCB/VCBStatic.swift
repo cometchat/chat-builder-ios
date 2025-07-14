@@ -127,21 +127,21 @@ public struct VCBStatic {
     // MARK: - Root Wrappers
     
     private struct VCBWrapper: Decodable {
-        let data: VCBData
+        var data: VCBData
     }
     
     private struct VCBData: Decodable {
-        let settings: VCBStaticConfig
+        var settings: VCBStaticConfig
     }
 }
 
 // MARK: - Your Actual Config
 public struct VCBStaticConfig: Decodable {
     
-    public let style: Style
-    public let chatFeatures: ChatFeatures
-    public let callFeatures: CallFeatures
-    public let layout: Layout
+    public var style: Style
+    public var chatFeatures: ChatFeatures
+    public var callFeatures: CallFeatures
+    public var layout: Layout
     
     // Default fallback
     public static func defaultConfig() -> VCBStaticConfig {
@@ -156,21 +156,21 @@ public struct VCBStaticConfig: Decodable {
     // MARK: - Nested Types
     
     public struct Style: Decodable {
-        public let theme: String
-        public let color: Color
-        public let typography: Typography
+        public var theme: String
+        public var color: Color
+        public var typography: Typography
         
         public struct Color: Decodable {
-            public let brandColor: String
-            public let primaryTextLight: String
-            public let primaryTextDark: String
-            public let secondaryTextLight: String
-            public let secondaryTextDark: String
+            public var brandColor: String
+            public var primaryTextLight: String
+            public var primaryTextDark: String
+            public var secondaryTextLight: String
+            public var secondaryTextDark: String
         }
         
         public struct Typography: Decodable {
-            public let font: String
-            public let size: String
+            public var font: String
+            public var size: String
         }
         
         public static func defaultStyle() -> Style {
@@ -192,62 +192,62 @@ public struct VCBStaticConfig: Decodable {
     }
     
     public struct ChatFeatures: Decodable {
-        public let coreMessagingExperience: CoreMessaging
-        public let deeperUserEngagement: Engagement
-        public let aiUserCopilot: Copilot
-        public let groupManagement: Group
-        public let moderatorControls: Moderator
-        public let privateMessagingWithinGroups: PrivateMessaging
+        public var coreMessagingExperience: CoreMessaging
+        public var deeperUserEngagement: Engagement
+        public var aiUserCopilot: Copilot
+        public var groupManagement: Group
+        public var moderatorControls: Moderator
+        public var privateMessagingWithinGroups: PrivateMessaging
         
         public struct CoreMessaging: Decodable {
-            public let typingIndicator: Bool
-            public let threadConversationAndReplies: Bool
-            public let photosSharing: Bool
-            public let videoSharing: Bool
-            public let audioSharing: Bool
-            public let fileSharing: Bool
-            public let editMessage: Bool
-            public let deleteMessage: Bool
-            public let messageDeliveryAndReadReceipts: Bool
-            public let userAndFriendsPresence: Bool
+            public var typingIndicator: Bool
+            public var threadConversationAndReplies: Bool
+            public var photosSharing: Bool
+            public var videoSharing: Bool
+            public var audioSharing: Bool
+            public var fileSharing: Bool
+            public var editMessage: Bool
+            public var deleteMessage: Bool
+            public var messageDeliveryAndReadReceipts: Bool
+            public var userAndFriendsPresence: Bool
         }
         
         public struct Engagement: Decodable {
-            public let mentions: Bool
-            public let reactions: Bool
-            public let messageTranslation: Bool
-            public let polls: Bool
-            public let collaborativeWhiteboard: Bool
-            public let collaborativeDocument: Bool
-            public let voiceNotes: Bool
-            public let emojis: Bool
-            public let stickers: Bool
-            public let userInfo: Bool
-            public let groupInfo: Bool
+            public var mentions: Bool
+            public var reactions: Bool
+            public var messageTranslation: Bool
+            public var polls: Bool
+            public var collaborativeWhiteboard: Bool
+            public var collaborativeDocument: Bool
+            public var voiceNotes: Bool
+            public var emojis: Bool
+            public var stickers: Bool
+            public var userInfo: Bool
+            public var groupInfo: Bool
         }
         
         public struct Copilot: Decodable {
-            public let conversationStarter: Bool
-            public let conversationSummary: Bool
-            public let smartReply: Bool
+            public var conversationStarter: Bool
+            public var conversationSummary: Bool
+            public var smartReply: Bool
         }
         
         public struct Group: Decodable {
-            public let createGroup: Bool
-            public let addMembersToGroups: Bool
-            public let joinLeaveGroup: Bool
-            public let deleteGroup: Bool
-            public let viewGroupMembers: Bool
+            public var createGroup: Bool
+            public var addMembersToGroups: Bool
+            public var joinLeaveGroup: Bool
+            public var deleteGroup: Bool
+            public var viewGroupMembers: Bool
         }
         
         public struct Moderator: Decodable {
-            public let kickUsers: Bool
-            public let banUsers: Bool
-            public let promoteDemoteMembers: Bool
+            public var kickUsers: Bool
+            public var banUsers: Bool
+            public var promoteDemoteMembers: Bool
         }
         
         public struct PrivateMessaging: Decodable {
-            public let sendPrivateMessageToGroupMembers: Bool
+            public var sendPrivateMessageToGroupMembers: Bool
         }
         
         public static func defaultFeatures() -> ChatFeatures {
@@ -302,13 +302,13 @@ public struct VCBStaticConfig: Decodable {
     }
     
     public struct CallFeatures: Decodable {
-        public let voiceAndVideoCalling: VoiceVideo
+        public var voiceAndVideoCalling: VoiceVideo
         
         public struct VoiceVideo: Decodable {
-            public let oneOnOneVoiceCalling: Bool
-            public let oneOnOneVideoCalling: Bool
-            public let groupVideoConference: Bool
-            public let groupVoiceConference: Bool
+            public var oneOnOneVoiceCalling: Bool
+            public var oneOnOneVideoCalling: Bool
+            public var groupVideoConference: Bool
+            public var groupVoiceConference: Bool
         }
         
         public static func defaultCalls() -> CallFeatures {
@@ -324,9 +324,9 @@ public struct VCBStaticConfig: Decodable {
     }
     
     public struct Layout: Decodable {
-        public let withSideBar: Bool
-        public let tabs: [String]
-        public let chatType: String
+        public var withSideBar: Bool
+        public var tabs: [String]
+        public var chatType: String
         
         public static func defaultLayout() -> Layout {
             return Layout(
