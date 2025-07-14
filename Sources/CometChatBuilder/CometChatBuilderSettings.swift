@@ -1,31 +1,31 @@
 import Foundation
 
-public struct VCBStatic {
+public struct CometChatBuilderSettings {
     
-    public static let shared: VCBStaticConfig = {
+    public static let shared: BuilderStaticConfig = {
         guard let url = Bundle.main.url(forResource: "vcb_config", withExtension: "json"),
               let data = try? Data(contentsOf: url),
-              let decoded = try? JSONDecoder().decode(VCBWrapper.self, from: data)
+              let decoded = try? JSONDecoder().decode(BuilderWrapper.self, from: data)
         else {
             print("⚠️ Failed to load or decode vcb_config.json, falling back to defaults.")
-            return VCBStaticConfig.defaultConfig()
+            return BuilderStaticConfig.defaultConfig()
         }
         return decoded.data.settings
     }()
     
     // MARK: - Root Wrappers
     
-    private struct VCBWrapper: Decodable {
-        var data: VCBData
+    private struct BuilderWrapper: Decodable {
+        var data: BuilderData
     }
     
-    private struct VCBData: Decodable {
-        var settings: VCBStaticConfig
+    private struct BuilderData: Decodable {
+        var settings: BuilderStaticConfig
     }
 }
 
 // MARK: - Your Actual Config
-public struct VCBStaticConfig: Decodable {
+public struct BuilderStaticConfig: Decodable {
     
     public var style: Style
     public var chatFeatures: ChatFeatures
@@ -33,8 +33,8 @@ public struct VCBStaticConfig: Decodable {
     public var layout: Layout
     
     // Default fallback
-    public static func defaultConfig() -> VCBStaticConfig {
-        return VCBStaticConfig(
+    public static func defaultConfig() -> BuilderStaticConfig {
+        return BuilderStaticConfig(
             style: Style.defaultStyle(),
             chatFeatures: ChatFeatures.defaultFeatures(),
             callFeatures: CallFeatures.defaultCalls(),
