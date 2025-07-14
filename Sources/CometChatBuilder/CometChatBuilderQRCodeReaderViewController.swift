@@ -1,7 +1,7 @@
 import UIKit
 import AVFoundation
 
-class BarCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class CometChatBuilderQRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     var onBarCodeFound: ((_ data: String) -> ())?
     

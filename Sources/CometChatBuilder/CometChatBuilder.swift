@@ -1,20 +1,14 @@
-//
-//  CometChatVCB.swift
-//  master-app
-//
-//  Created by Dawinder on 22/06/25.
-//
 
 import Foundation
 import UIKit
 
-public class CometChatVCB {
+public class CometChatBuilder {
     
     public static func startScanning(from viewController: UIViewController, onStyleApplied: @escaping (Style) -> Void) {
-        let barCodeReaderViewController = BarCodeReaderViewController()
+        let barCodeReaderViewController = CometChatBuilderQRCodeReaderViewController()
         
         barCodeReaderViewController.onBarCodeFound = { code in
-            let vc = QRCodeLoadingViewController()
+            let vc = CometChatBuilderQRCodeLoadingViewController()
             vc.data = code
             
             vc.onStyleApplied = { style in

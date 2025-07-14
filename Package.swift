@@ -2,22 +2,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "VCB",
+    name: "CometChatBuilder",
     platforms: [
         .iOS(.v13)
     ],
     products: [
         .library(
-            name: "VCB",
-            targets: ["VCB"]
+            name: "CometChatBuilder",
+            targets: ["CometChatBuilder"]
         )
     ],
     targets: [
         .target(
-            name: "VCB",
-            path: "Sources/VCB",
+            name: "CometChatBuilder",
+            path: "Sources/CometChatBuilder",
             resources: [
-                .process("../../Resources/VCBAssets.xcassets")
+                .process("../../Resources/CometChatBuilderAssets.xcassets")
             ]
         )
     ]

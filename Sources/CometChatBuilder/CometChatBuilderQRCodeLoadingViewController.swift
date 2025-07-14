@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class QRCodeLoadingViewController: UIViewController {
+class CometChatBuilderQRCodeLoadingViewController: UIViewController {
 
     var onStyleApplied: ((_ style: Style) -> Void)?
     var failure: (() -> Void)?
@@ -16,13 +16,13 @@ class QRCodeLoadingViewController: UIViewController {
     var data: String?
     
     private let centerImageView: UIImageView = {
-        let imageView = UIImageView(image: VCBAssets.image(named: "emptyChatState"))
+        let imageView = UIImageView(image: CometChatBuilderAssets.image(named: "emptyChatState"))
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
     private let leftIconView: UIImageView = {
-        let imageView = UIImageView(image: VCBAssets.image(named: "fontIcon"))
+        let imageView = UIImageView(image: CometChatBuilderAssets.image(named: "fontIcon"))
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
@@ -30,7 +30,7 @@ class QRCodeLoadingViewController: UIViewController {
     }()
     
     private let rightIconView: UIImageView = {
-        let imageView = UIImageView(image: VCBAssets.image(named: "palatteIcon"))
+        let imageView = UIImageView(image: CometChatBuilderAssets.image(named: "palatteIcon"))
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
@@ -128,7 +128,7 @@ class QRCodeLoadingViewController: UIViewController {
             }
         }
 
-        VCBHelper.initiateVCBWith(code: data ?? "", completion: { setting in
+        CometChatBuilderHelper.initiateBuilderWith(code: data ?? "", completion: { setting in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.progressTimer?.invalidate()
                 self.navigationController?.popViewController(animated: true)
@@ -221,11 +221,11 @@ private class GradientProgressView: UIView {
     }
 }
 
-public class VCBAssets {
+public class CometChatBuilderAssets {
     public static func image(named name: String) -> UIImage? {
         let bundle = Bundle(for: Self.self)
 
-        guard let resourceBundleURL = bundle.url(forResource: "VCB", withExtension: "bundle"),
+        guard let resourceBundleURL = bundle.url(forResource: "CometChatBuilder", withExtension: "bundle"),
               let resourceBundle = Bundle(url: resourceBundleURL) else {
             return nil
         }

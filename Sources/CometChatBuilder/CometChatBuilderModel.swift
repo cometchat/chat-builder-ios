@@ -1,9 +1,3 @@
-//
-//  VCB Model .swift
-//  CometChatUIKitSwift
-//
-//  Created by Suryansh on 09/06/25.
-//
 
 // MARK: - Full API Response
 
