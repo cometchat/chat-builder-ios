@@ -2,18 +2,17 @@ import Foundation
 
 public struct CometChatBuilderSettings {
     
-    public static let shared: BuilderStaticConfig = {
-        guard let url = Bundle.main.url(forResource: "vcb_config", withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let decoded = try? JSONDecoder().decode(BuilderWrapper.self, from: data)
-        else {
-            print("⚠️ Failed to load or decode vcb_config.json, falling back to defaults.")
+    public static var shared: BuilderStaticConfig = {
+        if let url = Bundle.main.url(forResource: "cometchat-builder-settings", withExtension: "json"),
+           let data = try? Data(contentsOf: url),
+           let decoded = try? JSONDecoder().decode(BuilderWrapper.self, from: data) {
+            print("✅ Loaded config from JSON.")
+            return decoded.data.settings
+        } else {
+            print("⚠️ Failed to load JSON, using default config.")
             return BuilderStaticConfig.defaultConfig()
         }
-        return decoded.data.settings
     }()
-    
-    // MARK: - Root Wrappers
     
     private struct BuilderWrapper: Decodable {
         var data: BuilderData
@@ -66,11 +65,11 @@ public struct BuilderStaticConfig: Decodable {
             return Style(
                 theme: "light",
                 color: Color(
-                    brandColor: "#000000",
-                    primaryTextLight: "#000000",
+                    brandColor: "#6852D6",
+                    primaryTextLight: "#141414",
                     primaryTextDark: "#FFFFFF",
-                    secondaryTextLight: "#AAAAAA",
-                    secondaryTextDark: "#CCCCCC"
+                    secondaryTextLight: "#727272",
+                    secondaryTextDark: "#989898"
                 ),
                 typography: Typography(
                     font: "System",
@@ -220,7 +219,7 @@ public struct BuilderStaticConfig: Decodable {
         public static func defaultLayout() -> Layout {
             return Layout(
                 withSideBar: true,
-                tabs: ["chats", "users"],
+                tabs: ["chats", "calls", "users", "groups"],
                 chatType: "user"
             )
         }

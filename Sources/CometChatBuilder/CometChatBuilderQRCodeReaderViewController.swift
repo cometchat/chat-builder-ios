@@ -370,7 +370,9 @@ class CometChatBuilderQRCodeReaderViewController: UIViewController, AVCaptureMet
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 DispatchQueue.main.async {
                     if granted {
-                        self.captureSession.startRunning()
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            self.captureSession.startRunning()
+                        }
                     } else {
                         self.showPermissionAlert()
                     }

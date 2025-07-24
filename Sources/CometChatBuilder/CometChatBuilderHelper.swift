@@ -129,16 +129,8 @@ class CometChatBuilderHelper {
             tabs: settings.layout.tabs,
             chatType: settings.layout.chatType
         )
-
-        // MARK: - NoCode UI (optional, not in your new struct, consider adding if needed)
-        // If needed, extend VCBStaticConfig with a `noCode` property and map similarly.
-
-        // 🔄 If you want this newConfig to be used by your app:
-        // Replace `VCBStatic.shared` with this new config (only if shared is a `var`)
-
-        // VCBStatic.shared = newConfig ❌ <- Not possible if shared is a let constant
-
-        // Instead, refactor your `VCBStatic` to accept this config (inject it or store it)
+        
+        CometChatBuilderSettings.shared = newConfig
     }
     
     static func initiateBuilderWith(code: String, completion: @escaping (Settings) -> Void, failure: @escaping () -> Void, apiFailure: @escaping (String) -> Void) {
