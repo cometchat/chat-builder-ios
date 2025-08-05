@@ -9,12 +9,10 @@ public struct CometChatBuilderSettings {
                   let data = try? Data(contentsOf: url),
                   let decoded = try? JSONDecoder().decode(BuilderWrapper.self, from: data)
             else {
-                print("⚠️ Failed to load or decode \(fileName).json, using default settings.")
                 return
             }
             
             shared = decoded.data.settings
-            print("✅ CometChatBuilderSettings loaded from \(fileName).json")
         }
     
     private struct BuilderWrapper: Decodable {
