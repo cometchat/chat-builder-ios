@@ -223,19 +223,17 @@ private class GradientProgressView: UIView {
 
 public class CometChatBuilderAssets {
     public static func image(named name: String) -> UIImage? {
-        let bundle = Bundle(for: Self.self)
-
-        guard let resourceBundleURL = bundle.url(forResource: "CometChatBuilder", withExtension: "bundle"),
-              let resourceBundle = Bundle(url: resourceBundleURL) else {
+        // Locate the bundle the pod creates (e.g., CometChatBuilder.bundle)
+        guard let bundleURL = Bundle(for: Self.self).url(forResource: "CometChatBuilder", withExtension: "bundle"),
+              let bundle = Bundle(url: bundleURL) else {
             return nil
         }
 
-        return UIImage(named: name, in: resourceBundle, compatibleWith: nil)
+        // Try to fetch image from bundle
+        if let image = UIImage(named: name, in: bundle, compatibleWith: nil) {
+            return image
+        } else {
+            return nil
+        }
     }
 }
-
-//public class CometChatBuilderAssets {
-//    public static func image(named name: String) -> UIImage? {
-//        return UIImage(named: name, in: Bundle(for: Self.self), compatibleWith: nil)
-//    }
-//}
