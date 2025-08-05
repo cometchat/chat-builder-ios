@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 
   s.source_files     = 'Sources/CometChatBuilder/**/*.{swift}'
   s.resource_bundles = {
-  'CometChatBuilder' => ['CometChatBuilder/Resources/*.xcassets']
+  'CometChatBuilder' => ['CometChatBuilder/Resources/CometChatBuilder.bundle']
 }
 
   
