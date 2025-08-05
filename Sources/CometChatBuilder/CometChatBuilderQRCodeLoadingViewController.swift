@@ -221,15 +221,21 @@ private class GradientProgressView: UIView {
     }
 }
 
+//public class CometChatBuilderAssets {
+//    public static func image(named name: String) -> UIImage? {
+//        let bundle = Bundle(for: Self.self)
+//
+//        guard let resourceBundleURL = bundle.url(forResource: "CometChatBuilder", withExtension: "bundle"),
+//              let resourceBundle = Bundle(url: resourceBundleURL) else {
+//            return nil
+//        }
+//
+//        return UIImage(named: name, in: resourceBundle, compatibleWith: nil)
+//    }
+//}
+
 public class CometChatBuilderAssets {
     public static func image(named name: String) -> UIImage? {
-        let bundle = Bundle(for: Self.self)
-
-        guard let resourceBundleURL = bundle.url(forResource: "CometChatBuilder", withExtension: "bundle"),
-              let resourceBundle = Bundle(url: resourceBundleURL) else {
-            return nil
-        }
-
-        return UIImage(named: name, in: resourceBundle, compatibleWith: nil)
+        return UIImage(named: name, in: Bundle(for: Self.self), compatibleWith: nil)
     }
 }
