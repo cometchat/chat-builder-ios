@@ -2,22 +2,17 @@ import Foundation
 
 public struct CometChatBuilderSettings {
     
-    public static var shared: BuilderStaticConfig = BuilderStaticConfig.defaultConfig()
-
-        public static func loadFromJSON() {
-            guard let url = Bundle.main.url(forResource: "cometchat-builder-settings", withExtension: "json"),
-                  let data = try? Data(contentsOf: url),
-                  let decoded = try? JSONDecoder().decode(BuilderWrapper.self, from: data)
-            else {
-                return
-            }
-            
-            shared = decoded.data.settings
+    public static var shared: BuilderStaticConfig = {
+        if let url = Bundle.main.url(forResource: "cometchat-builder-settings", withExtension: "json"),
+           let data = try? Data(contentsOf: url),
+           let decoded = try? JSONDecoder().decode(BuilderData.self, from: data) {
+            print("✅ Loaded config from JSON.")
+            return decoded.settings
+        } else {
+            print("⚠️ Failed to load JSON, using default config.")
+            return BuilderStaticConfig.defaultConfig()
         }
-    
-    private struct BuilderWrapper: Decodable {
-        var data: BuilderData
-    }
+    }()
     
     private struct BuilderData: Decodable {
         var settings: BuilderStaticConfig
