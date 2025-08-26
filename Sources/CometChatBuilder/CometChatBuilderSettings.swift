@@ -3,18 +3,26 @@ import Foundation
 public struct CometChatBuilderSettings {
     
     public static var shared: BuilderStaticConfig = BuilderStaticConfig.defaultConfig()
+    private static var isOverridden = false   // track if API/QR updated settings
 
-        public static func loadFromJSON() {
-            guard let url = Bundle.main.url(forResource: "cometchat-builder-settings", withExtension: "json"),
-                  let data = try? Data(contentsOf: url),
-                  let decoded = try? JSONDecoder().decode(BuilderData.self, from: data)
-            else {
-                return
-            }
-            
-            shared = decoded.settings
+    public static func loadFromJSON() {
+        // Don’t overwrite if already updated via API/QR
+        guard !isOverridden else { return }
+        
+        guard let url = Bundle.main.url(forResource: "cometchat-builder-settings", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let decoded = try? JSONDecoder().decode(BuilderData.self, from: data)
+        else {
+            return
         }
+        shared = decoded.settings
+    }
     
+    public static func applyFromAPI(_ config: BuilderStaticConfig) {
+        shared = config
+        isOverridden = true
+    }
+
     private struct BuilderData: Decodable {
         var settings: BuilderStaticConfig
     }

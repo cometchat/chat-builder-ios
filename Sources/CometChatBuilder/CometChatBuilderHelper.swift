@@ -130,7 +130,8 @@ class CometChatBuilderHelper {
             chatType: settings.layout.chatType
         )
         
-        CometChatBuilderSettings.shared = newConfig
+        CometChatBuilderSettings.applyFromAPI(newConfig)
+
     }
     
     static func initiateBuilderWith(code: String, completion: @escaping (Settings) -> Void, failure: @escaping () -> Void, apiFailure: @escaping (String) -> Void) {
