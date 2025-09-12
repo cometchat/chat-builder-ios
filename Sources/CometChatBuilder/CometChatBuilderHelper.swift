@@ -9,7 +9,7 @@ class CometChatBuilderHelper {
     
     //MARK: - API Call related function
     static func fetchStyle(code: String, completion: @escaping (Settings?) -> Void, apiFailure: @escaping (String) -> Void) {
-        guard let url = URL(string: "https://apivcb.cometchat-staging.com/v1/builders/\(code)") else {
+        guard let url = URL(string: "https://apivcb.cometchat.io/v1/builders/\(code)") else {
             completion(nil)
             return
         }
