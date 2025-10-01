@@ -73,11 +73,6 @@ class ViewController: UIViewController {
 
 ---
 
-## 📜 License
-This project is licensed under the MIT License.  
-
----
-
 ⚡ With `CometChatBuilder`, you can give users the power to instantly configure your app’s theme and settings just by scanning a QR code.  
 
 ## Help and Support
