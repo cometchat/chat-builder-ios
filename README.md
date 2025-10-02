@@ -32,7 +32,7 @@ pod install
 1. In Xcode, go to **File > Add Packages...**  
 2. Enter the repository URL:
    ```
-   https://github.com/your-org/CometChatBuilder.git
+   https://github.com/cometchat/chat-builder-ios.git
    ```
 3. Select the latest version and add it to your project.
 
