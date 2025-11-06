@@ -42,7 +42,7 @@ class CometChatBuilderQRCodeReaderViewController: UIViewController, AVCaptureMet
     
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Scan the QR to preview and interact with your design instantly."
+        label.text = "Scan the QR to interact with your design instantly."
         label.textColor = .lightGray
         label.font = .systemFont(ofSize: 14)
         label.numberOfLines = 2
@@ -81,7 +81,7 @@ class CometChatBuilderQRCodeReaderViewController: UIViewController, AVCaptureMet
         
         2. Point your camera at the QR code to scan.
         
-        3. Preview your design live on this device instantly.
+        3. View your design live on this device instantly.
         """
         label.font = .systemFont(ofSize: 14)
         label.numberOfLines = 0
