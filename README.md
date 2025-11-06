@@ -1,3 +1,7 @@
+<p align="center">
+  <img alt="CometChat" src="https://assets.cometchat.io/website/images/logos/banner.png">
+</p>
+
 # CometChatBuilder
 
 `CometChatBuilder` is a lightweight library that allows you to quickly configure and customize your CometChat-powered app by scanning a QR code. The scanned QR code can include theme settings, UI configurations, and other app-level preferences that will automatically be applied to your app.  
@@ -69,10 +73,9 @@ class ViewController: UIViewController {
 
 ---
 
-## 📜 License
-This project is licensed under the MIT License.  
-
----
-
 ⚡ With `CometChatBuilder`, you can give users the power to instantly configure your app’s theme and settings just by scanning a QR code.  
+
+## Help and Support
+For issues running the project or integrating with our SDK, consult our [documentation](https://www.cometchat.com/docs/sdk/ios/overview) or create a [support ticket](https://help.cometchat.com/hc/en-us) or seek real-time support via the [CometChat Dashboard](https://app.cometchat.com/).
+
 
