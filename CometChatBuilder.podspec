@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'CometChatBuilder'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = 'Chat builder component for CometChat iOS SDK'
   s.description      = 'A Swift library to power your low-code and no-code chat UI for CometChat.'
 
