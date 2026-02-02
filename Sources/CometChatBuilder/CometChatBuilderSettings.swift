@@ -35,6 +35,7 @@ public struct BuilderStaticConfig: Decodable {
     public var chatFeatures: ChatFeatures
     public var callFeatures: CallFeatures
     public var layout: Layout
+    public var agent: Agent
     
     // Default fallback
     public static func defaultConfig() -> BuilderStaticConfig {
@@ -42,7 +43,8 @@ public struct BuilderStaticConfig: Decodable {
             style: Style.defaultStyle(),
             chatFeatures: ChatFeatures.defaultFeatures(),
             callFeatures: CallFeatures.defaultCalls(),
-            layout: Layout.defaultLayout()
+            layout: Layout.defaultLayout(),
+            agent: Agent.defaultAgent()
         )
     }
     
@@ -91,6 +93,7 @@ public struct BuilderStaticConfig: Decodable {
         public var groupManagement: Group
         public var moderatorControls: Moderator
         public var privateMessagingWithinGroups: PrivateMessaging
+        public var agent: Agent
         
         public struct CoreMessaging: Decodable {
             public var typingIndicator: Bool
@@ -103,6 +106,10 @@ public struct BuilderStaticConfig: Decodable {
             public var deleteMessage: Bool
             public var messageDeliveryAndReadReceipts: Bool
             public var userAndFriendsPresence: Bool
+            public var conversationAndAdvancedSearch: Bool
+            public var moderation: Bool
+            public var quotedReplies: Bool
+            public var markAsUnread: Bool
         }
         
         public struct Engagement: Decodable {
@@ -117,6 +124,7 @@ public struct BuilderStaticConfig: Decodable {
             public var stickers: Bool
             public var userInfo: Bool
             public var groupInfo: Bool
+            public var mentionAll: Bool
         }
         
         public struct Copilot: Decodable {
@@ -137,6 +145,7 @@ public struct BuilderStaticConfig: Decodable {
             public var kickUsers: Bool
             public var banUsers: Bool
             public var promoteDemoteMembers: Bool
+            public var reportMessage: Bool
         }
         
         public struct PrivateMessaging: Decodable {
@@ -155,7 +164,11 @@ public struct BuilderStaticConfig: Decodable {
                     editMessage: true,
                     deleteMessage: true,
                     messageDeliveryAndReadReceipts: true,
-                    userAndFriendsPresence: true
+                    userAndFriendsPresence: true,
+                    conversationAndAdvancedSearch: true,
+                    moderation: true,
+                    quotedReplies: true,
+                    markAsUnread: true
                 ),
                 deeperUserEngagement: Engagement(
                     mentions: true,
@@ -168,7 +181,8 @@ public struct BuilderStaticConfig: Decodable {
                     emojis: true,
                     stickers: true,
                     userInfo: true,
-                    groupInfo: true
+                    groupInfo: true,
+                    mentionAll: true
                 ),
                 aiUserCopilot: Copilot(
                     conversationStarter: true,
@@ -185,10 +199,17 @@ public struct BuilderStaticConfig: Decodable {
                 moderatorControls: Moderator(
                     kickUsers: true,
                     banUsers: true,
-                    promoteDemoteMembers: true
+                    promoteDemoteMembers: true,
+                    reportMessage: true
                 ),
                 privateMessagingWithinGroups: PrivateMessaging(
                     sendPrivateMessageToGroupMembers: true
+                ),
+                agent: Agent(
+                    chatHistory: true,
+                    newChat: true,
+                    agentIcon: "",
+                    showAgentIcon: true
                 )
             )
         }
@@ -215,6 +236,23 @@ public struct BuilderStaticConfig: Decodable {
             )
         }
     }
+    
+    public struct Agent: Decodable {
+        public var chatHistory: Bool
+        public var newChat: Bool
+        public var agentIcon: String
+        public var showAgentIcon: Bool
+
+        public static func defaultAgent() -> Agent {
+            return Agent(
+                chatHistory: true,
+                newChat: true,
+                agentIcon: "",
+                showAgentIcon: true
+            )
+        }
+    }
+
     
     public struct Layout: Decodable {
         public var withSideBar: Bool
