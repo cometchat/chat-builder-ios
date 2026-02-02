@@ -67,9 +67,12 @@ class CometChatBuilderHelper {
             editMessage: settings.chatFeatures.coreMessagingExperience.editMessage,
             deleteMessage: settings.chatFeatures.coreMessagingExperience.deleteMessage,
             messageDeliveryAndReadReceipts: settings.chatFeatures.coreMessagingExperience.messageDeliveryAndReadReceipts,
-            userAndFriendsPresence: settings.chatFeatures.coreMessagingExperience.userAndFriendsPresence
+            userAndFriendsPresence: settings.chatFeatures.coreMessagingExperience.userAndFriendsPresence,
+            conversationAndAdvancedSearch: settings.chatFeatures.coreMessagingExperience.conversationAndAdvancedSearch,
+            moderation: settings.chatFeatures.coreMessagingExperience.moderation,
+            quotedReplies: settings.chatFeatures.coreMessagingExperience.quotedReplies,
+            markAsUnread: settings.chatFeatures.coreMessagingExperience.markAsUnread
         )
-
         // MARK: - Deeper Engagement
         newConfig.chatFeatures.deeperUserEngagement = .init(
             mentions: settings.chatFeatures.deeperUserEngagement.mentions,
@@ -82,7 +85,8 @@ class CometChatBuilderHelper {
             emojis: settings.chatFeatures.deeperUserEngagement.emojis,
             stickers: settings.chatFeatures.deeperUserEngagement.stickers,
             userInfo: settings.chatFeatures.deeperUserEngagement.userInfo,
-            groupInfo: settings.chatFeatures.deeperUserEngagement.groupInfo
+            groupInfo: settings.chatFeatures.deeperUserEngagement.groupInfo,
+            mentionAll: settings.chatFeatures.deeperUserEngagement.mentionAll
         )
 
         // MARK: - AI Copilot
@@ -105,7 +109,8 @@ class CometChatBuilderHelper {
         newConfig.chatFeatures.moderatorControls = .init(
             kickUsers: settings.chatFeatures.moderatorControls.kickUsers,
             banUsers: settings.chatFeatures.moderatorControls.banUsers,
-            promoteDemoteMembers: settings.chatFeatures.moderatorControls.promoteDemoteMembers
+            promoteDemoteMembers: settings.chatFeatures.moderatorControls.promoteDemoteMembers,
+            reportMessage: settings.chatFeatures.moderatorControls.reportMessage
         )
 
         // MARK: - Private Messaging

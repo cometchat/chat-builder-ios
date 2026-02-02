@@ -61,6 +61,10 @@ public struct ChatFeatures: Decodable {
         public let deleteMessage: Bool
         public let messageDeliveryAndReadReceipts: Bool
         public let userAndFriendsPresence: Bool
+        public var conversationAndAdvancedSearch: Bool
+        public var moderation: Bool
+        public var quotedReplies: Bool
+        public var markAsUnread: Bool
     }
 
     public struct DeeperUserEngagement: Decodable {
@@ -75,6 +79,7 @@ public struct ChatFeatures: Decodable {
         public let stickers: Bool
         public let userInfo: Bool
         public let groupInfo: Bool
+        public let mentionAll: Bool
     }
 
     public struct AiUserCopilot: Decodable {
@@ -95,6 +100,7 @@ public struct ChatFeatures: Decodable {
         public let kickUsers: Bool
         public let banUsers: Bool
         public let promoteDemoteMembers: Bool
+        public let reportMessage: Bool
     }
 
     public struct PrivateMessagingWithinGroups: Decodable {
